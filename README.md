@@ -1,6 +1,6 @@
-# Tech Learning Platform
+# DefenseIQ
 
-A monorepo for a technical learning platform focused on cybersecurity, software engineering, and IT study workflows.
+DefenseIQ-tech-learning platform is a full-stack cybersecurity/tech related learning platform that combines spaced repetition, AI-assisted study, progress analytics, and hands-on labs for technical learners.
 
 ## Included
 - Next.js frontend
