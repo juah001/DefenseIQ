@@ -4,6 +4,13 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts"
+
+"scripts": {
+  "dev": "tsx watch src/server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js"
+}
+    
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
