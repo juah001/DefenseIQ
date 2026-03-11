@@ -17,6 +17,10 @@ DefenseIQ-tech-learning platform is a full-stack cybersecurity/tech related lear
 - Worker scaffold
 - Sample seed data
 
+## Live Demo
+- Frontend: https://your-frontend-url.vercel.app
+- API: https://your-api-url.onrender.com
+  
 ## System Architecture
 ![System Architecture](docs/diagrams/system-architecture.png)
 
