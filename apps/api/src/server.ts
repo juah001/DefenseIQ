@@ -26,6 +26,9 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+app.use(cors({ origin: [frontendUrl, "http://localhost:3000"] }));
+
 app.use("/auth", authRouter);
 app.use("/decks", decksRouter);
 app.use("/cards", cardsRouter);
