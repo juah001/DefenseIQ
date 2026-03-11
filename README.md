@@ -27,6 +27,13 @@ DefenseIQ-tech-learning platform is a full-stack cybersecurity/tech related lear
 ![Security Architecture](docs/diagrams/security-architecture.png)
 ## Quick start
 
+## Product Screens
+
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Study Mode
+![Study](docs/screenshots/study.png)
 ### Start dependencies
 ```bash
 docker compose up -d postgres redis
