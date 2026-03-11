@@ -1,0 +1,7 @@
+## Key directories
+
+- `apps/web` — frontend
+- `apps/api` — backend API
+- `apps/worker` — background jobs
+- `database` — schema and seed data
+- `docs` — architecture, deployment, API, diagrams
