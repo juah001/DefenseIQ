@@ -168,6 +168,27 @@ DefenseIQ is intended to showcase:
 - deployable monorepo organization
 - documentation discipline
 
+Roadmap
+Planned improvements:
+- real authentication persistence
+- queue-based background workers
+- OpenAPI / Swagger API documentation
+- hardened sandbox code execution
+- multi-user deck publishing
+- analytics dashboards
+- AI-generated quizzes
+- real-time collaborative study rooms
+
+LICENSE:
+MIT License
+
+Author
+
+Moses Juah
+
+Cybersecurity
+DevOps Engineering
+Application Development
 
 
 
