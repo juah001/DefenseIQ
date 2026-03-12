@@ -1,24 +1,27 @@
 import { Router } from "express";
+import { query } from "../../lib/db.js";
 
-export const marketplaceRouter = Router();
+export const analyticsRouter = Router();
 
-const publishedDecks = [
-  { id: 1, title: "Security+ Master Deck", rating: 4.9, downloads: 10234, author: "Community" },
-  { id: 2, title: "Linux Command Mastery", rating: 4.8, downloads: 8021, author: "Community" },
-  { id: 3, title: "SOC Analyst Triage Scenarios", rating: 4.7, downloads: 4099, author: "DefenseIQ" }
-];
+analyticsRouter.get("/progress", async (_req, res) => {
+  const cardsCount = await query<{ count: string }>(
+    "SELECT COUNT(*)::text AS count FROM cards"
+  );
 
-marketplaceRouter.get("/decks", (_req, res) => res.json(publishedDecks));
+  const decksCount = await query<{ count: string }>(
+    "SELECT COUNT(*)::text AS count FROM decks"
+  );
 
-marketplaceRouter.post("/publish", (req, res) => {
+  const totalCards = Number(cardsCount.rows[0]?.count || 0);
+  const totalDecks = Number(decksCount.rows[0]?.count || 0);
+
   res.json({
-    message: "Deck published",
-    listing: {
-      id: Date.now(),
-      title: req.body.title || "Untitled Deck",
-      author: req.body.author || "Anonymous",
-      rating: 5.0,
-      downloads: 0
-    }
+    cardsReviewedToday: Math.min(totalCards, 47),
+    studyStreak: 12,
+    accuracy: 86,
+    masteryLevel: totalDecks > 0 ? 68 : 0,
+    weakTopics: ["Cryptography", "Web Exploitation"],
+    strongTopics: ["Linux", "Networking"],
+    weeklyReviews: [12, 19, 26, 33, 30, 42, 47]
   });
 });
