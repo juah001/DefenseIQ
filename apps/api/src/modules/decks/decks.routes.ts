@@ -1,22 +1,50 @@
 import { Router } from "express";
+import { z } from "zod";
+import { query } from "../../lib/db.js";
+import { requireAuth, AuthenticatedRequest } from "../../middleware/auth.js";
 
 export const decksRouter = Router();
 
-const decks = [
-  { id: 1, name: "Networking Fundamentals", published: true, owner: "Moses" },
-  { id: 2, name: "Linux for SOC Analysts", published: false, owner: "Moses" }
-];
+const createDeckSchema = z.object({
+  name: z.string().min(1),
+  description: z.string().optional()
+});
 
-decksRouter.get("/", (_req, res) => res.json(decks));
+decksRouter.get("/", async (_req, res) => {
+  const result = await query(
+    `
+    SELECT
+      d.id,
+      d.name,
+      d.description,
+      d.published,
+      u.display_name AS owner
+    FROM decks d
+    LEFT JOIN users u ON u.id = d.owner_id
+    ORDER BY d.created_at DESC
+    `
+  );
 
-decksRouter.post("/", (req, res) => {
-  res.json({
+  res.json(result.rows);
+});
+
+decksRouter.post("/", requireAuth, async (req: AuthenticatedRequest, res) => {
+  const parsed = createDeckSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json(parsed.error.flatten());
+  }
+
+  const result = await query(
+    `
+    INSERT INTO decks (owner_id, name, description, published)
+    VALUES ($1, $2, $3, false)
+    RETURNING id, name, description, published
+    `,
+    [req.user?.userId, parsed.data.name, parsed.data.description || null]
+  );
+
+  res.status(201).json({
     message: "Deck created",
-    deck: {
-      id: Date.now(),
-      name: req.body.name || "Untitled Deck",
-      description: req.body.description || "",
-      published: false
-    }
+    deck: result.rows[0]
   });
 });
