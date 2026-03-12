@@ -1,26 +1,52 @@
 import { Router } from "express";
+import { z } from "zod";
+import { query } from "../../lib/db.js";
+import { requireAuth, AuthenticatedRequest } from "../../middleware/auth.js";
 
 export const cardsRouter = Router();
 
-const cards = [
-  {
-    id: 1,
-    deckId: 1,
-    type: "flashcard",
-    question: "What does DNS stand for?",
-    answer: "Domain Name System"
-  },
-  {
-    id: 2,
-    deckId: 1,
-    type: "code",
-    question: "What is the output of [1,2,3].map(n => n * 2)?",
-    answer: "[2,4,6]"
+const createCardSchema = z.object({
+  deckId: z.number(),
+  type: z.string().min(1),
+  question: z.string().min(1),
+  answer: z.string().min(1)
+});
+
+cardsRouter.get("/due", async (_req, res) => {
+  const result = await query(
+    `
+    SELECT id, deck_id AS "deckId", type, question, answer
+    FROM cards
+    ORDER BY id ASC
+    LIMIT 20
+    `
+  );
+
+  res.json(result.rows);
+});
+
+cardsRouter.post("/", requireAuth, async (req: AuthenticatedRequest, res) => {
+  const parsed = createCardSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json(parsed.error.flatten());
   }
-];
 
-cardsRouter.get("/due", (_req, res) => res.json(cards));
+  const result = await query(
+    `
+    INSERT INTO cards (deck_id, type, question, answer)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id, deck_id AS "deckId", type, question, answer
+    `,
+    [
+      parsed.data.deckId,
+      parsed.data.type,
+      parsed.data.question,
+      parsed.data.answer
+    ]
+  );
 
-cardsRouter.post("/", (req, res) => {
-  res.json({ message: "Card created", card: { id: Date.now(), ...req.body } });
+  res.status(201).json({
+    message: "Card created",
+    card: result.rows[0]
+  });
 });
