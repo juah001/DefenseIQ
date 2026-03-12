@@ -2,255 +2,171 @@
 
 DefenseIQ-tech-learning platform is a full-stack cybersecurity/tech related learning platform that combines spaced repetition, AI-assisted study, progress analytics,
 and hands-on labs to help students, developers, and security professionals learn technical concepts through:
-- project overview
-- live demo section
-- architecture diagrams
-- features
-- tech stack
-- monorepo structure
-- setup instructions
-- deployment guide link
-- API docs link
-- CI/CD mention
-- security section
-- roadmap
-- author
-- licnese
-- spaced repetition learning
-- AI-assisted study tools
-- progress analytics
-- deck marketplace
-- hands-on cybersecurity labs
-  
-The platform combines modern full-stack engineering with learning science to improve how people study technical subjects.
+# DefenseIQ
 
-Live Demo
-Frontend
-https://your-frontend.vercel.app
-Backend API
-https://your-api.onrender.com
+DefenseIQ is a full-stack cybersecurity learning platform designed to help students, developers, and technical learners study more effectively through spaced repetition, AI-assisted learning, progress analytics, deck sharing, and hands-on lab scaffolds.
 
-System Architecture
-The platform uses a monorepo architecture to manage multiple services:
-- Next.js frontend
-- Express + TypeScript API
-- Express + TypeScript API
-- background worker
-- AI modules
-- cybersecurity labs
+## What this project demonstrates
 
-Platform Workflow
-Typical learning flow:
-- Platform Workflow
-- Review results update spaced repetition schedule
-- Review results update spaced repetition schedule
-- Progress analytics update learning metrics
-- Labs reinforce concepts with hands-on exercises
+- full-stack application architecture
+- monorepo organization
+- API design with Express and TypeScript
+- Next.js frontend structure
+- PostgreSQL data modeling
+- CI/CD automation with GitHub Actions
+- deployment readiness with Vercel and Render
+- security-minded engineering decisions
+- technical product documentation
 
-Security Architecture
-Security considerations built into the design:
-- secrets stored in environment variables
-- secrets stored in environment variables
-- input validation using Zod
-- CORS restrictions
-- AI provider keys stored server-side
-- code runner and lab environments isolated
+## Core features
 
-Features
-Study System
-- spaced repetition flashcards
-- spaced repetition flashcards
-- code-based questions
+- Study dashboard
+- Flashcard review flow
+- Spaced repetition engine scaffold
+- Deck marketplace
+- Progress analytics
+- AI flashcard generator scaffold
+- AI tutor scaffold
+- Code runner scaffold
+- Cybersecurity labs scaffold
+- Worker scaffold for background jobs
 
-Deck Marketplace
-- Deck Marketplace
-- download community decks
-- download community decks
+## Tech stack
 
-rating and popularity tracking
-- Progress Analytics
-- mastery progress
-- weak topic identification
+### Frontend
+- Next.js
+- React
 
-AI Learning Tools
-- AI Learning Tools
-- AI tutor explanations
-- AI tutor explanations
+### Backend
+- Express
+- TypeScript
+- Node.js
 
-Cybersecurity Labs
-- web security labs
-- SOC analyst log analysis labs
-- containerized lab environments
+### Database
+- PostgreSQL
 
-Tech Stack
+### Infrastructure
+- Docker Compose
+- Render
+- Vercel
 
-Frontend
+### DevOps
+- GitHub Actions CI
 
-Next.js
-React
-CSS modules
+## Monorepo structure
 
-Backend
+```text
+apps/
+  api/       Express + TypeScript API
+  web/       Next.js frontend
+  worker/    background job scaffold
 
-Express
-TypeScript
-Node.js
+packages/
+  shared/    shared types
 
-Database
-PostgreSQL
+database/
+  schema.sql
+  seeds/
 
-Infrastructure
+labs/
+  dvwa/
+  soc-logs/
 
-Docker
-Render
-Vercel
+docs/
+  API.md
+  DEPLOYMENT.md
+  SECURITY_ARCHITECTURE.md
+  diagrams/
+  screenshots/
 
-DevOps
-GitHub Actions CI/CD
+infrastructure/
+  docker/
 
-Security
+Local setup
 
-JWT authentication
-Zod validation
-Helmet middleware
-
-Monorepo Structure
-
-apps
-   api
-      Express API
-   web
-      Next.js frontend
-   worker
-      background jobs
-
-packages
-   shared
-      shared types
-
-database
-   schema.sql
-   seeds
-
-labs
-   dvwa
-   soc-logs
-
-docs
-   diagrams
-   API documentation
-   deployment guide
-
-infrastructure
-   docker
-
-Getting Started
-
-1 Start dependencies
+1. Start infrastructure
 docker compose up -d postgres redis
 
-2 Run backend
-
+2. Run backend
 cd apps/api
 npm install
 cp .env.example .env
 npm run dev
 
-3 Run frontend
-
+3. Run frontend
 cd apps/web
 npm install
 npm run dev
 
-4 Run worker
-
+4. Run worker
 cd apps/worker
 npm install
 npm run dev
 
-API Documentation
+Deployment
 
-See full documentation:
-docs/API.md
+Recommended deployment targets:
+- Frontend: Vercel
+- Backend API: Render Web Service
+- Worker: Render Background Worker
+- Database: Render Postgres
 
-Main endpoints:
+See:
+- docs/DEPLOYMENT.md
+
+API documentation
+See:
+- docs/API.md
+
+Main routes include:
+
 POST /auth/register
-POST /auth/login
-GET /cards/due
-POST /reviews
-GET /analytics/progress
-GET /marketplace/decks
-POST /ai/generate-flashcards
-POST /tutor/ask
-POST /code-runner/run
-GET /labs
+- POST /auth/login
+- GET /decks
+- POST /decks
+- GET /cards/due
+- POST /cards
+- POST /reviews
+- GET /analytics/progress
+- GET /marketplace/decks
+-  POST /marketplace/publish
+- POST /ai/generate-flashcards
+- POST /tutor/ask
+- POST /code-runner/run
+- GET /labs
+- POST /labs/start
 
+Security notes
+
+See:
+- docs/SECURITY_ARCHITECTURE.md
+- Current security-minded design includes:
+- environment variable based secrets
+- JWT auth scaffolding
+- input validation
+- CORS restrictions
+- basic rate limiting middleware
+- separation of frontend, API, worker, and database concerns
 
 CI/CD
-This project includes a GitHub Actions pipeline that automatically:
-- installs dependencies
-- builds backend
-- builds frontend
-- validates worker service
 
-Workflow file:
+GitHub Actions workflow included:
 .github/workflows/ci.yml
 
-CI runs on every:
-- push to main
-- pull request
+It validates:
+- backend dependency install and build
+- frontend dependency install and build
+- worker smoke test
 
+Portfolio value
 
-Deployment
-Recommended architecture:
-
-Frontend
-Vercel
-
-Backend API
-Render Web Service
-
-Worker
-Render Worker
-
-Database
-Render PostgreSQL
-
-
-Portfolio Value
-This project demonstrates:
--  full-stack application architecture
--  API design with TypeScript
--  monorepo project organization
--  DevOps pipeline automation
--  secure system design
--  technical documentation quality
--  learning systems engineering
-
-
-Roadmap
-Planned improvements:
-- real authentication persistence
-- queue-based background workers
-- OpenAPI / Swagger API documentation
-- hardened sandbox code execution
-- multi-user deck publishing
-- analytics dashboards
-- AI-generated quizzes
-- real-time collaborative study rooms
-
-LICENSE:
-MIT License
-
-Author
-
-Moses Juah
-
-Cybersecurity
-DevOps Engineering
-Application Development
-
-
+DefenseIQ is intended to showcase:
+- product architecture thinking
+- backend API design
+- frontend integration
+- security awareness
+- deployable monorepo organization
+- documentation discipline
 
 
 
