@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+
 import { authRouter } from "./modules/auth/auth.routes.js";
 import { decksRouter } from "./modules/decks/decks.routes.js";
 import { cardsRouter } from "./modules/cards/cards.routes.js";
@@ -13,21 +14,28 @@ import { tutorRouter } from "./modules/tutor/tutor.routes.js";
 import { codeRunnerRouter } from "./modules/code-runner/code-runner.routes.js";
 import { labsRouter } from "./modules/labs/labs.routes.js";
 
+import { basicRateLimit } from "./middleware/rate-limit.js";
+import { errorHandler } from "./middleware/error-handler.js";
+
 const app = express();
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: [frontendUrl, "http://localhost:3000"]
+  })
+);
 app.use(express.json());
+app.use(basicRateLimit);
 
 app.get("/", (_req, res) => {
-  res.json({ name: "Tech Learning Platform API", status: "ok" });
+  res.json({ name: "DefenseIQ API", status: "ok" });
 });
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
-
-const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
-app.use(cors({ origin: [frontendUrl, "http://localhost:3000"] }));
 
 app.use("/auth", authRouter);
 app.use("/decks", decksRouter);
@@ -39,6 +47,8 @@ app.use("/ai", aiRouter);
 app.use("/tutor", tutorRouter);
 app.use("/code-runner", codeRunnerRouter);
 app.use("/labs", labsRouter);
+
+app.use(errorHandler);
 
 const port = Number(process.env.PORT || 5000);
 app.listen(port, () => {
