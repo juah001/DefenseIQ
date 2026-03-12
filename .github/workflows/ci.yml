@@ -12,7 +12,10 @@ jobs:
 
     strategy:
       matrix:
-        project: [apps/api, apps/web, apps/worker]
+        project:
+          - apps/api
+          - apps/web
+          - apps/worker
 
     steps:
       - name: Checkout
@@ -23,7 +26,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install deps
+      - name: Install dependencies
         working-directory: ${{ matrix.project }}
         run: npm install
 
@@ -37,7 +40,7 @@ jobs:
         working-directory: apps/web
         run: npm run build
 
-      - name: Run Worker
+      - name: Worker smoke test
         if: matrix.project == 'apps/worker'
         working-directory: apps/worker
         run: node src/index.js
