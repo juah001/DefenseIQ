@@ -1,10 +1,34 @@
+type Deck = {
+  id: number;
+  title: string;
+  author: string;
+  rating: number;
+  downloads: number;
+};
+
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
-async function getDecks() {
+async function getDecks(): Promise<Deck[]> {
   try {
-    const res = await fetch(`${API}/marketplace/decks`, { cache: "no-store" });
-    return res.json();
-  } catch {
+    const res = await fetch(`${API}/marketplace/decks`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error("Marketplace API failed:", res.status, res.statusText);
+      return [];
+    }
+
+    const data = await res.json();
+
+    if (!Array.isArray(data)) {
+      console.error("Marketplace API did not return an array:", data);
+      return [];
+    }
+
+    return data as Deck[];
+  } catch (error) {
+    console.error("Failed to fetch marketplace decks:", error);
     return [];
   }
 }
