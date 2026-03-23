@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project:
+          - apps/api
+          - apps/web
+          - apps/worker
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: npm install
+
+      - name: Build API
+        if: matrix.project == 'apps/api'
+        working-directory: apps/api
+        run: npm run build
+
+      - name: Build Web
+        if: matrix.project == 'apps/web'
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Worker smoke test
+        if: matrix.project == 'apps/worker'
+        working-directory: apps/worker
+        run: node src/index.js

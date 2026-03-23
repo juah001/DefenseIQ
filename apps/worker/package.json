@@ -1,0 +1,7 @@
+{
+  "name": "tech-learning-worker",
+  "private": true,
+  "scripts": {
+    "dev": "node src/index.js"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "dvwa-001",
+  "title": "DVWA Intro Lab",
+  "dockerImage": "vulnerables/web-dvwa",
+  "difficulty": "Beginner",
+  "category": "web-security"
+}

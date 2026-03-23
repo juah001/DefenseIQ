@@ -1,0 +1,57 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+
+import { authRouter } from "./modules/auth/auth.routes.js";
+import { decksRouter } from "./modules/decks/decks.routes.js";
+import { cardsRouter } from "./modules/cards/cards.routes.js";
+import { reviewsRouter } from "./modules/reviews/reviews.routes.js";
+import { analyticsRouter } from "./modules/analytics/analytics.routes.js";
+import { marketplaceRouter } from "./modules/marketplace/marketplace.routes.js";
+import { aiRouter } from "./modules/ai/ai.routes.js";
+import { tutorRouter } from "./modules/tutor/tutor.routes.js";
+import { codeRunnerRouter } from "./modules/code-runner/code-runner.routes.js";
+import { labsRouter } from "./modules/labs/labs.routes.js";
+
+import { basicRateLimit } from "./middleware/rate-limit.js";
+import { errorHandler } from "./middleware/error-handler.js";
+
+const app = express();
+const PORT = Number(process.env.PORT) || 5000;
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
+app.use(helmet());
+app.use(
+  cors({
+    origin: [frontendUrl, "http://localhost:3000"],
+    credentials: true,
+  }),
+);
+app.use(express.json());
+app.use(basicRateLimit);
+
+app.get("/", (_req, res) => {
+  res.json({ name: "DefenseIQ API", status: "ok" });
+});
+
+app.get("/health", (_req, res) => {
+  res.json({ status: "ok" });
+});
+
+app.use("/auth", authRouter);
+app.use("/decks", decksRouter);
+app.use("/cards", cardsRouter);
+app.use("/reviews", reviewsRouter);
+app.use("/analytics", analyticsRouter);
+app.use("/marketplace", marketplaceRouter);
+app.use("/ai", aiRouter);
+app.use("/tutor", tutorRouter);
+app.use("/code-runner", codeRunnerRouter);
+app.use("/labs", labsRouter);
+
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});

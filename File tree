@@ -1,0 +1,63 @@
+tech-learning-platform/
+├── .gitignore
+├── README.md
+├── package.json
+├── docker-compose.yml
+├── scripts/
+│   └── setup.sh
+├── apps/
+│   ├── web/
+│   │   ├── package.json
+│   │   ├── next.config.mjs
+│   │   └── app/
+│   │       ├── globals.css
+│   │       ├── layout.js
+│   │       ├── page.js
+│   │       ├── study/page.js
+│   │       ├── marketplace/page.js
+│   │       ├── analytics/page.js
+│   │       ├── ai/page.js
+│   │       ├── tutor/page.js
+│   │       └── labs/page.js
+│   ├── api/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   ├── .env.example
+│   │   └── src/
+│   │       ├── server.ts
+│   │       ├── lib/
+│   │       │   └── auth.ts
+│   │       └── modules/
+│   │           ├── auth/auth.routes.ts
+│   │           ├── decks/decks.routes.ts
+│   │           ├── cards/cards.routes.ts
+│   │           ├── reviews/spaced-repetition.ts
+│   │           ├── reviews/reviews.routes.ts
+│   │           ├── analytics/analytics.routes.ts
+│   │           ├── marketplace/marketplace.routes.ts
+│   │           ├── ai/ai.routes.ts
+│   │           ├── tutor/tutor.routes.ts
+│   │           ├── code-runner/code-runner.routes.ts
+│   │           └── labs/labs.routes.ts
+│   └── worker/
+│       ├── package.json
+│       └── src/
+│           └── index.js
+├── packages/
+│   └── shared/
+│       ├── package.json
+│       └── src/
+│           └── types.ts
+├── database/
+│   ├── schema.sql
+│   └── seeds/
+│       └── sample-data.sql
+├── labs/
+│   ├── dvwa/
+│   │   └── lab-config.json
+│   └── soc-logs/
+│       └── lab-config.json
+└── infrastructure/
+    └── docker/
+        ├── api.Dockerfile
+        └── web.Dockerfile
