@@ -1,16 +1,3 @@
-🔥 Now we’re going from “good project” → **“this gets interviews” level README**.
-
-This version is what senior engineers / hiring managers expect:
-
-* Clear system thinking
-* Architecture visibility
-* Real-world tradeoffs
-* Product + engineering depth
-
----
-
-# 🚀 Replace your README with this (Senior-Level)
-
 # 🚀 DefenseIQ — Full-Stack Cybersecurity Learning Platform
 
 DefenseIQ is a production-ready cybersecurity learning platform that combines **spaced repetition, analytics, AI-assisted learning, and a marketplace of shared decks** into a unified system.
